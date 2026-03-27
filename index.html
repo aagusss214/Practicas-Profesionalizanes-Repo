@@ -4,18 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body{
+            background: #86afda;
+        }
+        form{
+            background: #7b88d7;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            border-radius: 20px;
+        }
+        input{
+            padding: 10px;
+            border-radius: 20px;
+            border: 5px solid #7b88d7;
+        }
+    </style>
 </head>
 <body>
     <h1>Formulario de inscripcion</h1>
     <form action="insertar.php" method="POST">
         <input type="text" placeholder="Nombre y Apellido">
         <input type="number" placeholder="DNI">
-        <label>Fecha de nacimiento</label>
         <input type="date" name="Fecha De Nacimiento">
         <input type="text" placeholder="Direccion">
         <input type="text" placeholder="Celular">
-        <input type="email">
-        <input type="submit">
+        <input type="email" placeholder="Email">
+        <input type="submit" value="Enviar">
     </form>
 </body>
 </html>
