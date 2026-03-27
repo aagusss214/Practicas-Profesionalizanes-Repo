@@ -2,7 +2,7 @@
 $servidor = "localhost";
 $usuario = "root";
 $password = "";
-$base_de_datos = "sistema_alumnos";
+$base_de_datos = "sistema_aulmnos";
 
 $conexion = mysqli_connect(
     $servidor,
