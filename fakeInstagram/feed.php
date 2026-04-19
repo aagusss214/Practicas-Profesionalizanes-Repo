@@ -1,6 +1,29 @@
 <?php
 include("db.php");
 
+// 
+date_default_timezone_set('America/Argentina/Buenos_Aires');
+
+
+// Funcion para saber cuanto timepo a pasado desde la creacion del post de manera mas agradable para el usuario
+// NOTE: Funcion Extraida Desde Stackoverflow
+// No Timestamp (yyyy-mm-dd - hh-mm-ss) o (año-mes-dia - hora-minutos-segundos) EJ: (2026-04-19 - 10-02-40)
+// - Params:
+// -- $datetime -> variable del timestamp para poder trabajar el parseo
+function timeAgo($datetime) {
+    $time = strtotime($datetime);
+    $diff = time() - $time;
+
+    if ($diff < 60) return "hace $diff seg";
+    if ($diff < 3600) return "hace " . floor($diff / 60) . " min";
+    if ($diff < 86400) return "hace " . floor($diff / 3600) . " h";
+    if ($diff < 172800) return "ayer";
+    if ($diff < 2592000) return "hace " . floor($diff / 86400) . " días";
+    if ($diff < 31536000) return "hace " . floor($diff / 2592000) . " meses";
+
+    return "hace " . floor($diff / 31536000) . " años";
+}
+
 // Traer posts + likes
 $sql = "SELECT posts.*, users.username,
                COUNT(likes.id) AS likes_count
@@ -17,8 +40,7 @@ $result = $conn->query($sql);
 
 <?php while ($data = $result->fetch_assoc()): ?>
 
-<div class="bg-zinc-900 border border-zinc-800 p-4 rounded-xl shadow">
-
+<div class="bg-zinc-900 border border-zinc-800 p-4 rounded-xl shadow border-2">
 
 <!-- 👤 Usuario -->
 <h3 class="text-indigo-400 font-semibold">
@@ -32,7 +54,7 @@ $result = $conn->query($sql);
 
 <!-- 📅 Fecha -->
 <p class="text-xs text-zinc-500 mt-2">
-    <?= $data['created_at'] ?>
+    <?= timeAgo($data['created_at']) ?>
 </p>
 
 <!-- ❤️ Like -->
@@ -61,6 +83,7 @@ $result = $conn->query($sql);
 <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $data['user_id']): ?>
     <form action="delete_post.php" method="POST" class="mt-2">
         <input type="hidden" name="post_id" value="<?= $data['id'] ?>">
+        <!-- En firefox no funciona -->
         <!-- <button onclick="return confirm('¿Eliminar post?')" 
             class="text-sm text-red-400 hover:text-red-600">
             🗑 Eliminar
