@@ -1,28 +1,13 @@
 <?php
 include("db.php");
+include("format_datetime.php");
 
-// 
+// NOTE: Si es posible en vez de usar una api gratis de imagenes random
+// NOTE: Usar o implementar un sistema de subida de imagenes
+// TODO: Buscar Servidores de Alojamiento de imagenes
+
+// timezone adecuado para que la funcion de parsear el tiempo funcione correctamente
 date_default_timezone_set('America/Argentina/Buenos_Aires');
-
-
-// Funcion para saber cuanto timepo a pasado desde la creacion del post de manera mas agradable para el usuario
-// NOTE: Funcion Extraida Desde Stackoverflow
-// No Timestamp (yyyy-mm-dd - hh-mm-ss) o (año-mes-dia - hora-minutos-segundos) EJ: (2026-04-19 - 10-02-40)
-// - Params:
-// -- $datetime -> variable del timestamp para poder trabajar el parseo
-function timeAgo($datetime) {
-    $time = strtotime($datetime);
-    $diff = time() - $time;
-
-    if ($diff < 60) return "hace $diff seg";
-    if ($diff < 3600) return "hace " . floor($diff / 60) . " min";
-    if ($diff < 86400) return "hace " . floor($diff / 3600) . " h";
-    if ($diff < 172800) return "ayer";
-    if ($diff < 2592000) return "hace " . floor($diff / 86400) . " días";
-    if ($diff < 31536000) return "hace " . floor($diff / 2592000) . " meses";
-
-    return "hace " . floor($diff / 31536000) . " años";
-}
 
 // Traer posts + likes
 $sql = "SELECT posts.*, users.username,
@@ -43,9 +28,12 @@ $result = $conn->query($sql);
 <div class="bg-zinc-900 border border-zinc-800 p-4 rounded-xl shadow border-2">
 
 <!-- 👤 Usuario -->
-<h3 class="text-indigo-400 font-semibold">
-    <?= htmlspecialchars($data['username']) ?>
-</h3>
+<div class="flex items-center gap-3">
+
+    <h3 class="text-indigo-400 font-semibold">
+        <?= htmlspecialchars($data['username']) ?>
+    </h3>
+</div>
 
 <!-- 📝 Contenido -->
 <p class="mt-2 text-zinc-200">
@@ -84,11 +72,7 @@ $result = $conn->query($sql);
     <form action="delete_post.php" method="POST" class="mt-2">
         <input type="hidden" name="post_id" value="<?= $data['id'] ?>">
         <!-- En firefox no funciona -->
-        <!-- <button onclick="return confirm('¿Eliminar post?')" 
-            class="text-sm text-red-400 hover:text-red-600">
-            🗑 Eliminar
-        </button> -->
-        <button onclick="" 
+        <button onclick="return confirm('¿Eliminar post?')" 
             class="text-sm text-red-400 hover:text-red-600">
             🗑 Eliminar
         </button>
@@ -128,11 +112,7 @@ $result = $conn->query($sql);
             <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $comment['user_id']): ?>
                 <form action="delete_comment.php" method="POST">
                     <input type="hidden" name="comment_id" value="<?= $comment['id'] ?>">
-                    <!-- <button onclick="return confirm('¿Eliminar comentario?')" 
-                        class="text-xs text-red-400 hover:text-red-600 ml-2">
-                        🗑
-                    </button> -->
-                    <button onclick="" 
+                    <button onclick="return confirm('¿Eliminar comentario?')" 
                         class="text-xs text-red-400 hover:text-red-600 ml-2">
                         🗑
                     </button>
