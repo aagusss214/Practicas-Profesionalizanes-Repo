@@ -4,7 +4,7 @@
 // NOTE: Funcion Extraida Desde Stackoverflow
 // No Timestamp (yyyy-mm-dd - hh-mm-ss) o (año-mes-dia - hora-minutos-segundos) EJ: (2026-04-19 - 10-02-40)
 // - Params:
-// -- $datetime -> variable del timestamp para poder trabajar el parseo
+// -- $datetime -> variable del timestamp para poder trabajar el parseo de la fecha
 function timeAgo($datetime) {
     $time = strtotime($datetime);
     $diff = time() - $time;

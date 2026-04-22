@@ -90,7 +90,7 @@ $result = $conn->query($sql);
                      ORDER BY comments.created_at ASC";
 
     $stmt = $conn->prepare($comments_sql);
-    $stmt->bind_param("i", $data['id']);
+    $stmt->bind_param("s", $data['user_id']);
     $stmt->execute();
     $comments = $stmt->get_result();
     ?>
