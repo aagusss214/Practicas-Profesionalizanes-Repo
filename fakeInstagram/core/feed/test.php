@@ -22,5 +22,5 @@ $result = $conn->query($sql);
 ?>
 
 <?php while ($data = $result->fetch_assoc()): ?>
-    <?php include("./core/post/post_card.php"); ?>
+    <?php include("./components/post_card.php"); ?>
 <?php endwhile; ?>
