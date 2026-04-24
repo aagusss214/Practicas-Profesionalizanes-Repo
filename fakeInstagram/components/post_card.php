@@ -137,7 +137,7 @@ $comments = $stmt->get_result();
 
         <div>
             <span class="text-indigo-400 font-semibold">
-                <?= htmlspecialchars($comment['username']) ?>:
+                @<?= htmlspecialchars($comment['username']) ?>:
             </span>
             <span class="text-zinc-300">
                 <?= htmlspecialchars($comment['content']) ?>
@@ -193,7 +193,7 @@ function toggleMenu(id) {
     document.getElementById(id).classList.toggle("hidden");
 }
 
-// cerrar dropdown al hacer click afuera
+// cerrar dropdown al hacer click afuera (totalmente insescesario)
 document.addEventListener("click", function(e) {
     document.querySelectorAll("[id^='menu-']").forEach(menu => {
         if (!menu.previousElementSibling.contains(e.target) && !menu.contains(e.target)) {
